@@ -6,6 +6,8 @@ def activate(env):
     global prev_syspath
     prev_syspath = list(sys.path)
     activate = os.path.join(env, (sys.platform == 'win32') and 'Scripts' or 'bin', 'activate_this.py')
+    if not os.path.exists(activate):
+        activate = os.path.join(os.path.dirname(__file__), 'activate_this.py')
     with open(activate) as f:
         code = compile(f.read(), activate, 'exec')
         exec(code, dict(__file__=activate))
